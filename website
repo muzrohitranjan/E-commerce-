@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Anon - E-commerce Store</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #ffe6e6; /* Light pink background */
+      color: #333;
+      scroll-behavior: smooth;
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      background-color: #fff;
+      z-index: 1000;
+      border-bottom: 1px solid #ddd;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      color: #1e1e1e;
+      font-size: 1.5rem;
+    }
+
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #555;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a.active {
+      color: #ff4d4d; /* Pink accent color */
+    }
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .search-bar input {
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      outline: none;
+    }
+
+    .search-bar select {
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      outline: none;
+    }
+
+    .icons img {
+      width: 24px;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+      background: #fff;
+      margin: 2rem;
+      border-radius: 10px;
+      padding: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero-text h2 {
+      font-size: 2.5rem;
+      color: #333;
+    }
+
+    .hero-text p {
+      font-size: 1.2rem;
+      color: #ff4d4d;
+      margin: 0.5rem 0;
+    }
+
+    .hero-text button {
+      background: #ff4d4d;
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+      outline-offset: 2px;
+    }
+
+    .hero-text button:hover,
+    .hero-text button:focus-visible {
+      background: #e63939;
+      outline: 2px solid #b32d2d;
+    }
+
+    .hero-image img {
+      width: 300px;
+      border-radius: 10px;
+    }
+
+    /* Filters */
+    .filters {
+      padding: 1rem 2rem;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .filters button {
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      outline-offset: 2px;
+    }
+
+    .filters button.active,
+    .filters button:focus-visible {
+      background: #ff4d4d;
+      color: #fff;
+      border-color: #ff4d4d;
+      outline: 2px solid #b32d2d;
+    }
+
+    /* Product Grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      padding: 2rem;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+      position: relative;
+    }
+
+    .card:hover,
+    .card:focus-within {
+      transform: translateY(-5px);
+      outline: none;
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .card-content {
+      padding: 1rem;
+    }
+
+    .card-content h3 {
+      font-size: 1.1rem;
+      margin-bottom: 5px;
+    }
+
+    .card-content p {
+      color: #ff4d4d;
+      font-weight: bold;
+    }
+
+    .add-to-cart {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 77, 77, 0.9);
+      color: #fff;
+      padding: 0.5rem;
+      text-align: center;
+      transform: translateY(100%);
+      transition: transform 0.3s;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .card:hover .add-to-cart,
+    .card:focus-within .add-to-cart {
+      transform: translateY(0);
+    }
+
+    /* Services Section */
+    .services {
+      padding: 2rem;
+      background: #fff;
+      margin: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .services h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .services ul {
+      list-style: none;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+
+    .services li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+    }
+
+    .services img {
+      width: 24px;
+    }
+
+    /* Accessibility Enhancements */
+    :focus-visible {
+      outline: 2px solid #ff4d4d;
+      outline-offset: 2px;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .hero-banner {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .hero-image img {
+        width: 200px;
+        margin-top: 1rem;
+      }
+
+      header {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      nav a {
+        margin: 0 10px;
+      }
+
+      .search-bar {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .search-bar input {
+        width: 70%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>Anon</h1>
+    <nav>
+      <a href="#home" class="nav-link active">Home</a>
+      <a href="#mens" class="nav-link">Mens</a>
+      <a href="#womens" class="nav-link">Womens</a>
+      <a href="#jewelry" class="nav-link">Jewelry</a>
+      <a href="#perfume" class="nav-link">Perfume</a>
+      <a href="#blog" class="nav-link">Blog</a>
+    </nav>
+    <div class="search-bar">
+      <select aria-label="Language selector">
+        <option value="en">English</option>
+        <option value="es">Spanish</option>
+      </select>
+      <input type="text" placeholder="Enter your product name..." aria-label="Search products" />
+      <div class="icons">
+        <img src="https://via.placeholder.com/24?text=Profile" alt="Profile icon" />
+        <img src="https://via.placeholder.com/24?text=Cart" alt="Cart icon" />
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Banner -->
+  <section class="hero-banner" aria-label="Promotional banner">
+    <div class="hero-text">
+      <h2>Trending Accessories</h2>
+      <p>Modern Sunglasses</p>
+      <p>Starting at $15.00</p>
+      <button role="button" aria-label="Shop sunglasses now">Shop Now</button>
+    </div>
+    <div class="hero-image">
+      <img src="https://via.placeholder.com/300x200?text=Sunglasses" alt="Two women wearing sunglasses" />
+    </div>
+  </section>
+
+  <!-- Filter Buttons -->
+  <section class="filters" role="list" aria-label="Product category filters" tabindex="0">
+    <button class="filter-btn active" data-category="all" role="listitem" aria-pressed="true" tabindex="0">All</button>
+    <button class="filter-btn" data-category="new-arrivals" role="listitem" aria-pressed="false" tabindex="-1">New Arrivals</button>
+    <button class="filter-btn" data-category="trending" role="listitem" aria-pressed="false" tabindex="-1">Trending</button>
+    <button class="filter-btn" data-category="top-rated" role="listitem" aria-pressed="false" tabindex="-1">Top Rated</button>
+  </section>
+
+  <!-- Product Grid -->
+  <section class="product-grid" id="products" role="list" aria-label="Product listings">
+    <!-- New Arrivals -->
+    <div class="card" data-category="new-arrivals" role="listitem" tabindex="0">
+      <img src="https://via.placeholder.com/300x200?text=Relaxed+Short" alt="Relaxed Short Full" />
+      <div class="card-content">
+        <h3>Relaxed Short Full</h3>
+        <p>$45.00</p>
+      </div>
+      <div class="add-to-cart" tabindex="0" role="button" aria-label="Add Relaxed Short Full to cart">Add to Cart</div>
+    </div>
+    <div class="card" data-category="new-arrivals" role="listitem" tabindex="0">
+      <img src="https://via.placeholder.com/300x200?text=Running+Shoes" alt="Running & Trekking Shoes" />
+      <div class="card-content">
+        <h3>Running & Trekking Shoes</h3>
+        <p>$99.00</p>
+      </div>
+      <div class="add-to-cart" tabindex="0" role="button" aria-label="Add Running & Trekking Shoes to cart">Add to Cart</div>
+    </div>
+    <div class="card" data-category="new-arrivals" role="listitem" tabindex="0">
+      <img src="https://via.placeholder.com/300x200?text=Pocket+Watch" alt="Pocket Watch Leather" />
+      <div class="card-content">
+        <h3>Pocket Watch Leather</h3>
+        <p>$150.00</p>
+      </div>
+      <div class="add-to-cart" tabindex="0" role="button" aria-label="Add Pocket Watch Leather to cart">Add to Cart</div>
+    </div>
+    <!-- Trending -->
+    <div class="card" data-category="trending" role="listitem" tabindex="0">
+      <img src="https://via.placeholder.com/300x200?text=Embroidered+Dress" alt="Girls Pink Embroidered Dress" />
+      <div class="card-content">
+        <h3>Girls Pink Embroidered Dress</h3>
+        <p>$61.00</p>
+      </div>
+      <div class="add-to-cart" tabindex="0" role="button" aria-label="Add Girls Pink Embroidered Dress to cart">Add to Cart</div>
+    </div>
+    <div class="card" data-category="trending" role="listitem" tabindex="0">
+      <img src="https://via.placeholder.com/300x200?text=Trekking+Shoes" alt="Trekking & Running Shoes" />
+      <div class="card-content">
+        <h3>Trekking & Running Shoes</h3>
+        <p>$78.00</p>
+      </div>
+      <div class="add-to-cart" tabindex="0" role="button" aria-label="Add Trekking & Running Shoes to cart">Add to Cart</div>
+    </div>
+    <div class="card" data-category="trending" role="listitem" tabindex="0">
+      <img src="https://via.placeholder.com/300x200?text=Leather+Necklace" alt="Elegant Leather Necklace" />
+      <div class="card-content">
+        <h3>Elegant Leather Necklace</h3>
+        <p>$84.00</p>
+      </div>
+      <div class="add-to-cart" tabindex="0" role="button" aria-label="Add Elegant Leather Necklace to cart">Add to Cart</div>
+    </div>
+    <!-- Top Rated -->
+    <div class="card" data-category="top-rated" role="listitem" tabindex="0">
+      <img src="https://via.placeholder.com/300x200?text=Floral+Wrap+Dress" alt="Block Floral Wrap Dress" />
+      <div class="card-content">
+        <h3>Block Floral Wrap Dress</h3>
+        <p>$75.00</p>
+      </div>
+      <div class="add-to-cart" tabindex="0" role="button" aria-label="Add Block Floral Wrap Dress to cart">Add to Cart</div>
+    </div>
+    <div class="card" data-category="top-rated" role="listitem" tabindex="0">
+      <img src="https://via.placeholder.com/300x200?text=Party+Wear" alt="Women's Party Wear" />
+      <div class="card-content">
+        <h3>Women's Party Wear</h3>
+        <p>$94.00</p>
+      </div>
+      <div class="add-to-cart" tabindex="0" role="button" aria-label="Add Women's Party Wear to cart">Add to Cart</div>
+    </div>
+    <div class="card" data-category="top-rated" role="listitem" tabindex="0">
+      <img src="https://via.placeholder.com/300x200?text=Perfume" alt="Titan 300 Ml Women's Perfume" />
+      <div class="card-content">
+        <h3>Titan 300 Ml Women's Perfume</h3>
+        <p>$190.00</p>
+      </div>
+      <div class="add-to-cart" tabindex="0" role="button" aria-label="Add Titan 300 Ml Women's Perfume to cart">Add to Cart</div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="services" aria-label="Our services">
+    <h2>Our Services</h2>
+    <ul role="list">
+      <li role="listitem">
+        <img src="https://via.placeholder.com/24?text=Shipping" alt="Shipping icon" />
+        Worldwide Delivery For Orders $200+
+      </li>
+      <li role="listitem">
+        <img src="https://via.placeholder.com/24?text=Support" alt="Support icon" />
+        Best Online Support Next Day Delivery
+      </li>
+      <li role="listitem">
+        <img src="https://via.placeholder.com/24?text=Returns" alt="Returns icon" />
+        30 Days Money Back For Orders $100+
+      </li>
+    </ul>
+  </section>
+
+  <script>
+    // Cache elements
+    const filtersContainer = document.querySelector('.filters');
+    const filterButtons = filtersContainer.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.card');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    // Event delegation for filter buttons
+    filtersContainer.addEventListener('click', (event) => {
+      const btn = event.target.closest('button.filter-btn');
+      if (!btn) return;
+
+      // Update aria-pressed and tabindex on buttons for accessibility
+      filterButtons.forEach(button => {
+        button.classList.remove('active');
+        button.setAttribute('aria-pressed', 'false');
+        button.setAttribute('tabindex', '-1');
+      });
+
+      btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
+      btn.setAttribute('tabindex', '0');
+      btn.focus();
+
+      const category = btn.getAttribute('data-category');
+
+      // Show/hide cards based on filter
+      cards.forEach(card => {
+        const cardCategory = card.getAttribute('data-category');
+        card.style.display = category === 'all' || cardCategory === category ? 'block' : 'none';
+      });
+    });
+
+    // Keyboard support for filter buttons (left/right arrow navigation)
+    filtersContainer.addEventListener('keydown', (event) => {
+      const focused = document.activeElement;
+      if (!focused.classList.contains('filter-btn')) return;
+
+      let index = Array.from(filterButtons).indexOf(focused);
+      if (event.key === 'ArrowRight') {
+        index = (index + 1) % filterButtons.length;
+        filterButtons[index].focus();
+        event.preventDefault();
+      } else if (event.key === 'ArrowLeft') {
+        index = (index - 1 + filterButtons.length) % filterButtons.length;
+        filterButtons[index].focus();
+        event.preventDefault();
+      } else if (event.key === 'Enter' || event.key === ' ') {
+        focused.click();
+        event.preventDefault();
+      }
+    });
+
+    // Navigation link highlighting
+    navLinks.forEach(link => {
+      link.addEventListener('click', (event) => {
+        event.preventDefault();
+        navLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
